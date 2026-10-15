@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Learning Hub | Grades 1–12</title>
+<style>
+:root{--navy:#172554;--blue:#3156d9;--pale:#eef3ff;--ink:#172033;--muted:#64748b;--line:#e4eaf4;--white:#fff;--green:#14805e;--page:#f7f9fd;--card:#fff;--soft:#f7f9ff}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,#172554,#3156d9);color:white;padding:28px max(22px,calc((100% - 1160px)/2)) 34px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.account-btn{border:1px solid #ffffff80;border-radius:12px;padding:10px 15px;background:#ffffff18;color:white;font:inherit;font-weight:750;cursor:pointer}.account-btn:hover{background:#ffffff30}.modal-backdrop{display:none;position:fixed;inset:0;background:#0b1538a8;z-index:99;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.account-modal{background:var(--card);color:var(--ink);width:min(520px,100%);border-radius:22px;padding:24px;box-shadow:0 24px 80px #0004}.account-modal h2{margin:0 0 6px}.account-modal p{color:var(--muted);margin:0 0 18px}.account-modal label{display:block;font-weight:700;margin:14px 0 7px}.account-modal input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit}.account-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.account-stat{background:#f1f5ff;border-radius:12px;padding:13px}.account-stat strong{display:block;font-size:1.35rem;color:var(--blue)}.account-stat span{font-size:.8rem;color:var(--muted)}.modal-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}.secondary{border:1px solid var(--line);border-radius:11px;background:white;padding:11px 14px;font:inherit;cursor:pointer}.brand{font-size:1.05rem;font-weight:800;letter-spacing:.2px}.pill{border:1px solid #ffffff55;border-radius:999px;padding:7px 12px;font-size:.82rem}
+h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.06;margin:34px 0 12px;max-width:760px;letter-spacing:-1.4px}.hero p{color:#e1e8ff;max-width:650px;line-height:1.65;margin:0}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.controls select,.controls input{border:0;border-radius:12px;padding:13px 15px;font:inherit;min-height:46px}.controls select{background:white;color:var(--ink);min-width:165px}.controls input{flex:1;min-width:210px}
+main{max-width:1160px;margin:auto;padding:28px 22px 60px}.welcome{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}.welcome h2{margin:0;font-size:1.5rem}.welcome p{margin:6px 0 0;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 30px}.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px}.stat strong{font-size:1.45rem;color:var(--blue);display:block}.stat span{color:var(--muted);font-size:.88rem}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:10px;margin:28px 0 14px}.section-title h2{font-size:1.25rem;margin:0}.section-title span{font-size:.9rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.subject{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:19px;display:flex;flex-direction:column;min-height:220px;transition:transform .15s,box-shadow .15s}.subject:hover{transform:translateY(-3px);box-shadow:0 10px 24px #17255412}.subject-top{display:flex;align-items:center;gap:12px}.emoji{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--pale);font-size:1.55rem}.subject h3{margin:0;font-size:1.05rem}.subject small{color:var(--muted)}.subject p{font-size:.91rem;color:#526078;line-height:1.5;margin:14px 0 18px;flex:1}.subject button,.primary{border:0;border-radius:11px;background:var(--blue);color:white;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer}.subject button:hover,.primary:hover{background:#2444bb}.empty{grid-column:1/-1;text-align:center;padding:35px;background:white;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+.panel{display:none;margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 24px #1725540a}.panel.active{display:block}.panel-head{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}.panel h2{margin:0}.close{border:1px solid var(--line);background:white;border-radius:10px;padding:8px 12px;cursor:pointer}.panel-intro{color:var(--muted);line-height:1.6}.resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.resource{background:#f7f9ff;border-radius:14px;padding:16px}.resource h3{font-size:.98rem;margin:0 0 8px}.resource p{font-size:.9rem;line-height:1.5;color:#5b667c;margin:0}.quiz{border-top:1px solid var(--line);padding-top:20px;margin-top:16px}.quiz h3{margin:0 0 10px}.question{font-size:1.05rem;font-weight:700;margin:12px 0}.answers{display:flex;gap:10px;flex-wrap:wrap}.answers button{border:1px solid #cdd7ed;background:white;border-radius:10px;padding:10px 13px;cursor:pointer;font:inherit}.answers button:hover{border-color:var(--blue);background:var(--pale)}.feedback{min-height:26px;margin-top:12px;font-weight:700}.footer{background:#101c40;color:#d9e2ff;padding:24px;text-align:center;font-size:.9rem}.note{font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:20px}
+
+:root{scroll-behavior:auto}button,select,input{transition:background .16s,border-color .16s,transform .16s}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8ca8ff;outline-offset:3px}
+.top-actions{gap:8px}.utility-btn{border:1px solid #ffffff70;border-radius:12px;padding:10px 13px;background:#ffffff12;color:#fff;font:inherit;font-weight:750;cursor:pointer}.utility-btn:hover{background:#ffffff2c}
+.hero h1{ text-wrap:balance}.hero p{font-size:1.03rem}.hero{max-width:1160px;margin:auto}.brand{display:flex;align-items:center;gap:8px}.welcome{padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(110deg,var(--card),var(--soft))}.welcome h2{letter-spacing:-.4px}.stats .stat{box-shadow:0 5px 18px #17255408}.stats .stat strong{font-variant-numeric:tabular-nums}.section-title{margin-top:34px}.subject{box-shadow:0 4px 14px #17255408}.subject button{width:100%;margin-top:3px}.subject .emoji{flex-shrink:0}.subject h3{line-height:1.3}.subject small{display:inline-block;margin-top:4px}.quest-integration{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 26px #1725540a}.quest-integration .section-title{margin-top:0}.quest-integration iframe{width:100%;border:1px solid var(--line);border-radius:16px;background:#edf2fb}.account-btn{white-space:nowrap}.profile-chip{display:none;color:white;font-size:.88rem;font-weight:700;padding:8px 12px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff30}.progress-summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-12px 0 28px;padding:14px 17px;background:var(--card);border:1px solid var(--line);border-radius:14px}.progress-track{height:8px;background:#e8edf7;border-radius:99px;overflow:hidden;flex:1;min-width:90px}.progress-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#3156d9,#26a879);border-radius:99px;transition:width .25s}.progress-summary strong{font-size:.9rem}.empty button{margin-top:10px}
+body.dark{--page:#0d1426;--card:#141f35;--soft:#192844;--ink:#eaf0ff;--muted:#a9b6d0;--line:#2b3a57;--pale:#202f50;background:var(--page)}body.dark .subject p,body.dark .resource p,body.dark .panel-intro{color:#b8c4dc}body.dark .resource{background:#1b2943}body.dark .answers button,body.dark .secondary,body.dark .close{background:#192844;color:#eaf0ff;border-color:#354565}body.dark .account-modal input{background:#0d1426;color:#eaf0ff;border-color:#354565}body.dark .empty{background:var(--card)}
+
+.activity-picker{margin:20px 0}.activity-picker h3{margin:0 0 10px}.activity-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.activity-choice{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#f4f7ff;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:15px;font:inherit;cursor:pointer;min-height:104px}.activity-choice strong{color:var(--blue)}.activity-choice span{font-size:.86rem;color:var(--muted);line-height:1.4}.activity-choice:hover{border-color:var(--blue);background:var(--pale)}body.dark .activity-choice{background:#192844;color:var(--ink)}.activity-back{margin:0 0 12px}.activity-hidden{display:none!important}@media(max-width:900px){.activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.activity-grid{grid-template-columns:1fr}.activity-choice{min-height:auto}}\n@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat{padding:13px}.subject{min-height:190px}header{padding-top:22px}}
+
+.quest-integration{margin:30px 0 12px}.quest-description{color:var(--muted);margin:0 0 14px;line-height:1.6}.quest-integration iframe{min-height:680px}@media(max-width:650px){.quest-integration iframe{height:1000px;min-height:850px}}
+
+/* Knowledge Quest 3D and fullscreen controls */
+body.fullscreen-fallback{position:fixed;inset:0;z-index:9999;overflow:auto;width:100%;height:100%;background:var(--page)}
+#panel:fullscreen{overflow:auto;background:var(--page);padding:clamp(16px,3vw,36px)}body:fullscreen{overflow:auto}
+
+
+/* Chromebook performance mode: avoid costly motion and decorative effects. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+<header>
+<div class="topline"><div class="brand">📘 Learning Hub</div><div class="top-actions"><div class="pill">Grades 1–12 · Learn at your pace</div><span class="profile-chip" id="profileChip"></span><button aria-label="Toggle dark mode" class="utility-btn" id="themeToggle" type="button">🌙 Theme</button><button class="utility-btn" id="fullscreenToggle" type="button" title="Enter or exit full screen">⛶ Full screen</button><button class="utility-btn" id="jumpQuest" type="button" title="Open Knowledge Quest 3D">🎮 Play Quest</button><button class="account-btn" id="openAccount" type="button">👤 Account</button></div></div>
+<div class="hero">
+<h1>Your school subjects, all in one place.</h1>
+<p>Explore subjects, choose your grade, and practise with quick questions. A friendly learning space for elementary, middle, and high school students.</p>
+<div class="controls">
+<select aria-label="Choose grade" id="grade"></select>
+<input aria-label="Search subjects" id="search" placeholder="Search subjects…" type="search"/>
+</div>
+</div>
+</header>
+<div aria-labelledby="accountTitle" aria-modal="true" class="modal-backdrop" id="accountBackdrop" role="dialog">
+<section class="account-modal"><h2 id="accountTitle">👤 Your account</h2><p>Your learning profile and progress on this device.</p>
+<label for="accountName">Your name</label><input autocomplete="nickname" id="accountName" maxlength="40" placeholder="Enter your name"/>
+<div class="account-stats"><div class="account-stat"><strong id="accountAnswered">0</strong><span>Questions tried</span></div><div class="account-stat"><strong id="accountCorrect">0</strong><span>Correct answers</span></div><div class="account-stat"><strong id="accountRate">0%</strong><span>Accuracy</span></div></div>
+<p id="accountMessage">Your stats update as you practise.</p><div class="modal-actions"><button class="secondary" id="closeAccount" type="button">Close</button><button class="primary" id="saveAccount" type="button">Save profile</button></div></section></div>
+<main>
+<div class="welcome"><div><h2 id="welcomeTitle">Welcome to Grade 1!</h2><p id="welcomeSubtitle">Choose a subject to explore its learning topics and practise.</p></div><button class="primary" id="resumeLearning" type="button">✨ Start learning</button></div>
+<div class="stats">
+<div class="stat"><strong>12</strong><span>School grades</span></div>
+<div class="stat"><strong id="subjectCount">12</strong><span>Subject areas</span></div>
+<div class="stat"><strong>∞</strong><span>Ways to learn</span></div>
+</div>
+<div class="progress-summary"><strong>📈 Your practice progress</strong><div aria-label="Practice progress" class="progress-track"><span id="progressFill"></span></div><span id="progressText">0 questions answered</span></div><div class="section-title"><h2>Explore subjects</h2><span id="resultCount">12 subjects</span></div>
+<div class="grid" id="subjects"></div>
+<section aria-live="polite" class="panel" id="panel">
+<div class="panel-head"><div><h2 id="panelTitle">Subject</h2><p class="panel-intro" id="panelIntro"></p></div><button class="close" id="closePanel">✕ Close</button></div>
+<div class="activity-picker" id="activityPicker">
+<h3>What would you like to do?</h3>
+<div class="activity-grid">
+<button class="activity-choice" type="button" data-activity="learn"><strong>📖 Learn topics</strong><span>Explore the main ideas and learning topics.</span></button>
+<button class="activity-choice" type="button" data-activity="practice"><strong>✏️ Practice questions</strong><span>Try a question and get instant feedback.</span></button>
+<button class="activity-choice" type="button" data-activity="quiz"><strong>🏆 Quiz challenge</strong><span>Test what you know with a run of questions.</span></button>
+<button class="activity-choice" type="button" data-activity="game"><strong>🎮 Knowledge Quest 3D</strong><span>Enter the learning island and answer portal questions.</span></button>
+</div>
+</div>
+<button class="secondary activity-back activity-hidden" id="activityBack" type="button">← Choose a different activity</button>
+<div class="resource-grid" id="resources"></div>
+
+<div class="quiz">
+<h3>Quick practice</h3>
+<p class="panel-intro">Try a question for your selected grade. Choose an answer to check it, then generate another question.</p>
+<div class="question" id="question"></div>
+<div class="answers" id="answers"></div>
+<div class="feedback" id="feedback" role="status"></div>
+<button class="primary" id="nextQuestion">New question ↻</button>
+</div>
+<p class="note">Learning topics are a general guide. Your school's curriculum may cover topics in a different order. Religion content is presented as a study subject; families and schools can adapt it to their curriculum.</p>
+</section>
+<section aria-labelledby="quest-title" class="quest-integration" id="knowledge-quest">
+<div class="section-title"><h2 id="quest-title">🎮 Knowledge Quest 3D</h2><span>Play &amp; learn</span></div>
+<p class="quest-description">Explore the learning island, choose your grade and subject, answer questions, and earn points—all right here in your Learning Hub.</p>
+<iframe allow="fullscreen" loading="eager" referrerpolicy="no-referrer" sandbox="allow-scripts allow-forms" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Knowledge Quest 3D — Learning Game&lt;/title&gt;
+&lt;style&gt;
+:root{--ink:#172033;--blue:#3659dc;--light:#f4f7ff;--green:#13845d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,&quot;Segoe UI&quot;,sans-serif;background:#edf2fb;color:var(--ink)}
+header{padding:16px 22px;background:#172554;color:white;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:1.1rem}.tag{font-size:.82rem;color:#dbe5ff}
+main{max-width:1120px;margin:0 auto;padding:20px}
+.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:18px;align-items:start}
+.game-wrap{background:#fff;border:1px solid #dce4f3;border-radius:20px;overflow:hidden;box-shadow:0 12px 32px #1a2c5012}
+.game-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;gap:8px;flex-wrap:wrap}.game-top strong{font-size:1rem}
+canvas{width:100%;height:auto;display:block;background:#9bd9ff;touch-action:none;outline:none}canvas:focus-visible{outline:4px solid #3659dc;outline-offset:-4px}
+.hint{padding:11px 16px;background:#f6f8ff;color:#586781;font-size:.86rem;line-height:1.5}
+.side{display:grid;gap:14px}.card{background:white;border:1px solid #dce4f3;border-radius:18px;padding:17px;box-shadow:0 8px 22px #1a2c500a}
+.card h2{font-size:1.08rem;margin:0 0 12px}.field{display:grid;gap:6px;margin:10px 0}.field label{font-size:.86rem;color:#586781;font-weight:700}.field select{width:100%;padding:11px;border:1px solid #d7dfef;border-radius:10px;background:white;font:inherit}
+button{cursor:pointer;font:inherit;font-weight:750;border:0;border-radius:11px;padding:11px 13px;background:var(--blue);color:white}button:hover{filter:brightness(.95)}button.secondary{background:#edf1ff;color:#2945b4;border:1px solid #dbe3ff}button:disabled{opacity:.5;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f5f7ff;border-radius:12px;padding:10px}.stat b{font-size:1.25rem;display:block;color:#2949c7}.stat span{font-size:.76rem;color:#64718a}
+#question{font-weight:800;line-height:1.4;font-size:1.05rem;margin:8px 0 13px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.answers button{background:#f2f5ff;color:#26345b;border:1px solid #dce4f5;text-align:left;font-weight:650}.answers button.correct{background:#e3f8ee;border-color:#6ac59c;color:#116745}.answers button.wrong{background:#fff0ed;border-color:#ffb8a8;color:#9e3523}
+#feedback{min-height:42px;font-size:.9rem;line-height:1.45;color:#586781;margin:10px 0}.progress{height:8px;background:#e8edf7;border-radius:99px;overflow:hidden;margin:8px 0 12px}.progress div{height:100%;width:0;background:#27a879;transition:width .2s}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.controls button{padding:10px 4px}.note{font-size:.82rem;color:#6b7890;line-height:1.5}.hidden{display:none!important}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.side .quiz-card{grid-column:1/-1}}
+@media(max-width:520px){main{padding:12px}.side{grid-template-columns:1fr}.side .quiz-card{grid-column:auto}.stats{gap:5px}.stat{padding:8px}.answers{grid-template-columns:1fr 1fr}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div&gt;&lt;div class=&quot;logo&quot;&gt;🧠 Knowledge Quest 3D&lt;/div&gt;&lt;div class=&quot;tag&quot;&gt;Explore a world. Collect knowledge. Level up.&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;tag&quot;&gt;Grades 1–12 · Learning adventure&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;&lt;div class=&quot;layout&quot;&gt;
+&lt;section class=&quot;game-wrap&quot;&gt;
+ &lt;div class=&quot;game-top&quot;&gt;&lt;strong&gt;🌳 Learning Island&lt;/strong&gt;&lt;span class=&quot;tag&quot; style=&quot;color:#586781&quot;&gt;Walk up to the glowing portal!&lt;/span&gt;&lt;/div&gt;
+ &lt;canvas id=&quot;world&quot; width=&quot;800&quot; height=&quot;500&quot; tabindex=&quot;0&quot; role=&quot;application&quot; aria-label=&quot;Colorful 3D-style learning game world. Click the world, then use WASD or arrow keys to move.&quot;&gt;&lt;/canvas&gt;
+ &lt;div class=&quot;hint&quot;&gt;Click the world once, then move with &lt;b&gt;W A S D&lt;/b&gt; or &lt;b&gt;arrow keys&lt;/b&gt;. On a Chromebook, you can also click the movement buttons below. Walk toward the glowing question portal and press &lt;b&gt;E&lt;/b&gt; or tap “Explore portal”. This game uses a lightweight 3D-style scene drawn directly in your browser.&lt;/div&gt;
+ &lt;div class=&quot;controls&quot;&gt;&lt;button class=&quot;secondary&quot; id=&quot;left&quot;&gt;◀ Left&lt;/button&gt;&lt;button class=&quot;secondary&quot; id=&quot;forward&quot;&gt;▲ Forward&lt;/button&gt;&lt;button class=&quot;secondary&quot; id=&quot;right&quot;&gt;Right ▶&lt;/button&gt;&lt;button class=&quot;secondary&quot; id=&quot;back&quot;&gt;▼ Back&lt;/button&gt;&lt;button id=&quot;explore&quot;&gt;✨ Explore portal&lt;/button&gt;&lt;button class=&quot;secondary&quot; id=&quot;reset&quot;&gt;↻ Restart&lt;/button&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;aside class=&quot;side&quot;&gt;
+ &lt;section class=&quot;card&quot;&gt;&lt;h2&gt;🎒 Your adventure&lt;/h2&gt;&lt;div class=&quot;stats&quot;&gt;&lt;div class=&quot;stat&quot;&gt;&lt;b id=&quot;points&quot;&gt;0&lt;/b&gt;&lt;span&gt;Knowledge points&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;stat&quot;&gt;&lt;b id=&quot;streak&quot;&gt;0&lt;/b&gt;&lt;span&gt;Streak&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;stat&quot;&gt;&lt;b id=&quot;level&quot;&gt;1&lt;/b&gt;&lt;span&gt;Level&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;p class=&quot;note&quot;&gt;Answer questions correctly to earn points. Each 50 points earns a new level.&lt;/p&gt;&lt;/section&gt;
+ &lt;section class=&quot;card&quot;&gt;&lt;h2&gt;🛠️ Game settings&lt;/h2&gt;
+  &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;grade&quot;&gt;Your grade&lt;/label&gt;&lt;select id=&quot;grade&quot;&gt;&lt;/select&gt;&lt;/div&gt;
+  &lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;subject&quot;&gt;Subject&lt;/label&gt;&lt;select id=&quot;subject&quot;&gt;
+  &lt;option value=&quot;mixed&quot;&gt;Mixed subjects&lt;/option&gt;&lt;option value=&quot;math&quot;&gt;Math&lt;/option&gt;&lt;option value=&quot;science&quot;&gt;Science&lt;/option&gt;&lt;option value=&quot;language&quot;&gt;Language Arts&lt;/option&gt;&lt;option value=&quot;social&quot;&gt;Social Studies&lt;/option&gt;&lt;option value=&quot;languages&quot;&gt;Foreign Languages&lt;/option&gt;&lt;option value=&quot;computing&quot;&gt;Computer Science&lt;/option&gt;&lt;option value=&quot;health&quot;&gt;Health &amp; Wellness&lt;/option&gt;&lt;option value=&quot;arts&quot;&gt;Art &amp; Music&lt;/option&gt;
+  &lt;/select&gt;&lt;/div&gt;
+  &lt;button class=&quot;secondary&quot; id=&quot;newQuest&quot; style=&quot;width:100%&quot;&gt;Choose a new question&lt;/button&gt;
+ &lt;/section&gt;
+ &lt;section class=&quot;card quiz-card&quot; id=&quot;quiz&quot;&gt;
+  &lt;h2&gt;🚪 Portal challenge&lt;/h2&gt;&lt;div class=&quot;progress&quot;&gt;&lt;div id=&quot;progress&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;tag&quot; id=&quot;qMeta&quot; style=&quot;color:#64718a&quot;&gt;Question 1&lt;/div&gt;&lt;div id=&quot;question&quot;&gt;Walk to the glowing portal and choose Explore portal to begin!&lt;/div&gt;
+  &lt;div class=&quot;answers&quot; id=&quot;answers&quot;&gt;&lt;/div&gt;&lt;div id=&quot;feedback&quot;&gt;You can change grade and subject at any time.&lt;/div&gt;
+  &lt;button class=&quot;secondary&quot; id=&quot;next&quot; style=&quot;width:100%&quot; disabled&gt;Next question →&lt;/button&gt;
+ &lt;/section&gt;
+&lt;/aside&gt;&lt;/div&gt;&lt;/main&gt;
+&lt;script&gt;
+const canvas=document.getElementById('world'),ctx=canvas.getContext('2d');
+const state={x:0,z:0,points:0,streak:0,answered:0,question:0,near:false,active:false,locked:false,correct:null,grade:1,subject:'mixed',lastQuestion:null};
+const $=id=&gt;document.getElementById(id);
+for(let i=1;i&lt;=12;i++){const o=document.createElement('option');o.value=i;o.textContent='Grade '+i;$('grade').appendChild(o)}
+function resize(){const dpr=Math.min(window.devicePixelRatio||1,1.15),r=canvas.getBoundingClientRect();canvas.width=Math.round(r.width*dpr);canvas.height=Math.round((r.width*500/800)*dpr);ctx.setTransform(canvas.width/800,0,0,canvas.width/800,0,0);draw()}
+function poly(points,color){ctx.fillStyle=color;ctx.beginPath();points.forEach((p,i)=&gt;i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fill()}
+function ellipse(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill()}
+function line(points,color,w=2){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();points.forEach((p,i)=&gt;i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke()}
+function tree(x,y,s=1){ellipse(x,y+7*s,22*s,8*s,'#4a9b63');poly([[x-4*s,y+5*s],[x+4*s,y+5*s],[x+3*s,y-27*s],[x-3*s,y-27*s]],'#8b5b37');ellipse(x,y-30*s,18*s,22*s,'#2d9d66');ellipse(x-10*s,y-22*s,11*s,13*s,'#46bd78');ellipse(x+10*s,y-22*s,11*s,13*s,'#218855')}
+function crystal(x,y,s,c){ctx.save();ctx.translate(x,y);ctx.scale(s,s);poly([[0,-27],[15,-5],[10,19],[-10,19],[-15,-5]],c);poly([[0,-27],[0,10],[-10,19],[-15,-5]],'#ffffff77');poly([[0,-27],[15,-5],[0,10]],'#ffffff44');ctx.restore()}
+function draw(){
+ ctx.clearRect(0,0,800,500);
+ const sky=ctx.createLinearGradient(0,0,0,500);sky.addColorStop(0,'#79caff');sky.addColorStop(1,'#e5f8ff');ctx.fillStyle=sky;ctx.fillRect(0,0,800,500);
+ // distant clouds and sun
+ ellipse(690,67,28,28,'#ffe17a');ellipse(120,73,35,13,'#ffffffcc');ellipse(144,69,24,19,'#ffffffcc');ellipse(510,95,38,12,'#ffffffbb');ellipse(536,89,22,18,'#ffffffbb');
+ poly([[0,245],[150,170],[280,245],[420,160],[570,245],[700,180],[800,230],[800,500],[0,500]],'#9bd58a');
+ poly([[0,310],[180,235],[340,310],[520,230],[700,300],[800,260],[800,500],[0,500]],'#5bbd79');
+ // isometric-ish island ground
+ poly([[45,335],[390,205],[756,330],[403,468]],'#3f9e65');poly([[45,335],[403,468],[403,485],[45,352]],'#287d54');poly([[403,468],[756,330],[756,348],[403,485]],'#246d4a');
+ // paths
+ poly([[335,420],[405,391],[530,290],[575,300],[455,410],[403,443]],'#dfc58b');poly([[338,418],[405,391],[530,290],[541,292],[418,408],[403,428]],'#f5dda5');
+ // decorative stepping stones
+ for(let i=0;i&lt;6;i++){ellipse(380+i*23,421-i*17,8,4,'#f8e4b4')}
+ tree(135,302,1.1);tree(215,339,.8);tree(645,330,1.1);tree(700,296,.8);tree(570,375,.65);
+ crystal(285,290,.8,'#65e9ef');crystal(610,250,.9,'#f9a8ff');crystal(165,383,.55,'#f5d45d');
+ // portal at world location
+ const px=490-state.x*35+state.z*9,py=285+state.x*8+state.z*12;
+ ellipse(px,py+40,49,12,'#226c51aa');
+ ctx.save();ctx.shadowColor='#b66bff';ctx.shadowBlur=0;
+ ctx.strokeStyle='#a56aff';ctx.lineWidth=10;ctx.beginPath();ctx.ellipse(px,py,32,42,0,0,Math.PI*2);ctx.stroke();ctx.restore();
+ ctx.strokeStyle='#e8d5ff';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(px,py,23,34,0,0,Math.PI*2);ctx.stroke();
+ const pg=ctx.createRadialGradient(px,py,2,px,py,35);pg.addColorStop(0,'#b6fbffdd');pg.addColorStop(1,'#9863ff33');ellipse(px,py,24,34,pg);
+ // portal sign
+ ctx.fillStyle='#172554';ctx.fillRect(px-44,py-64,88,22);ctx.fillStyle='white';ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillText('QUIZ PORTAL',px,py-49);
+ // player shadow + cute avatar
+ const ax=400+state.x*35-state.z*9,ay=365+state.x*8-state.z*12;
+ ellipse(ax,ay+25,22,7,'#1b654888');poly([[ax-13,ay+3],[ax+13,ay+3],[ax+16,ay+24],[ax-16,ay+24]],'#3659dc');ellipse(ax,ay-9,17,18,'#f3c49a');ellipse(ax-6,ay-11,2.5,3,'#172033');ellipse(ax+6,ay-11,2.5,3,'#172033');line([[ax-6,ay-1],[ax+6,ay-1]],'#a95848',1.5);poly([[ax-15,ay-19],[ax-8,ay-30],[ax+9,ay-30],[ax+15,ay-19]],'#263d91');ellipse(ax,ay-28,15,7,'#263d91');
+ // UI overlay
+ ctx.textAlign='left';ctx.fillStyle='#143451';ctx.font='bold 15px system-ui';ctx.fillText('KNOWLEDGE IS YOUR SUPERPOWER',22,31);
+ ctx.font='13px system-ui';ctx.fillText('Explore the island and find the portal',22,52);
+ const dist=Math.hypot(px-ax,py-ay);state.near=dist&lt;115;
+ if(state.near){ctx.fillStyle='#172554';ctx.fillRect(267,442,266,38);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 14px system-ui';ctx.fillText('Portal nearby! Press E or tap Explore',400,466)}
+ else {ctx.fillStyle='#172554bb';ctx.fillRect(282,442,236,32);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='13px system-ui';ctx.fillText('Move around to find the portal',400,463)}
+}
+function move(dx,dz){state.x=Math.max(-3,Math.min(3,state.x+dx));state.z=Math.max(-3,Math.min(3,state.z+dz));draw()}
+const questions={
+ math:[
+  {q:'What is 2 + 3?',a:'5',o:['5','4','6','7'],max:2},{q:'What is 10 − 4?',a:'6',o:['5','6','7','14'],max:2},{q:'How many sides does a triangle have?',a:'3',o:['2','3','4','5'],max:3},
+  {q:'What is 6 × 4?',a:'24',o:['10','20','24','28'],max:4},{q:'What is half of 18?',a:'9',o:['6','8','9','12'],max:6},{q:'What is 25% of 100?',a:'25',o:['10','20','25','50'],max:8},
+  {q:'Solve: x + 7 = 12',a:'5',o:['4','5','7','19'],max:12}],
+ science:[
+  {q:'What do plants need to grow?',a:'Water and sunlight',o:['Water and sunlight','Plastic toys','Only darkness','Sand only'],max:2},{q:'Which animal can fly?',a:'Bird',o:['Fish','Bird','Cat','Turtle'],max:3},{q:'What force pulls things toward Earth?',a:'Gravity',o:['Sound','Gravity','Colour','Light'],max:6}],
+ language:[
+  {q:'Which word rhymes with “cat”?',a:'Hat',o:['Hat','Dog','Sun','Tree'],max:2},{q:'Which word names a person, place, or thing?',a:'Noun',o:['Noun','Verb','Adverb','Punctuation'],max:4},{q:'What is the main idea?',a:'What the text is mostly about',o:['What the text is mostly about','The page number','The longest word','The title only'],max:7}],
+ social:[
+  {q:'What does a map help you find?',a:'Places',o:['Places','A song','A taste','A smell'],max:3},{q:'Who helps people borrow books?',a:'Librarian',o:['Librarian','Pilot','Chef','Mechanic'],max:4},{q:'What is a community?',a:'People who live or work in a place',o:['A planet','People who live or work in a place','A type of cloud','A mountain only'],max:7}],
+ languages:[
+  {q:'What does “Hola” mean in Spanish?',a:'Hello',o:['Hello','Goodbye','Please','Thank you'],max:3},{q:'What does “Merci” mean in French?',a:'Thank you',o:['Hello','Thank you','Good night','Please'],max:5}],
+ computing:[
+  {q:'What is an algorithm?',a:'Steps to solve a problem',o:['Steps to solve a problem','A computer chair','A screen colour','A game character'],max:5},{q:'What should you do with your password?',a:'Keep it private',o:['Post it online','Keep it private','Tell strangers','Use your name only'],max:3}],
+ health:[
+  {q:'Which habit helps keep teeth healthy?',a:'Brush your teeth',o:['Brush your teeth','Eat only candy','Never clean them','Avoid water'],max:3},{q:'Who can you talk to when you need help?',a:'A trusted adult',o:['A trusted adult','A stranger online','Nobody ever','A person who scares you'],max:6}],
+ arts:[
+  {q:'Which tool can you draw with?',a:'Pencil',o:['Pencil','Shoe','Plate','Pillow'],max:2},{q:'Which are primary colours in traditional paint mixing?',a:'Red, yellow and blue',o:['Red, yellow and blue','Pink, black and white','Green and purple only','Gold and silver'],max:5}]
+};
+function shuffleList(list){const a=[...list];for(let i=a.length-1;i&gt;0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function makeGameMath(g){let a,b,ans,q,kind;
+ if(g&lt;=2){const max=g===1?10:100;a=Math.floor(Math.random()*(max+1));b=Math.floor(Math.random()*(max+1));kind=Math.random()&lt;.5?'+':'−';if(kind==='−'&amp;&amp;b&gt;a)[a,b]=[b,a];ans=kind==='+'?a+b:a-b;q=`What is ${a} ${kind} ${b}?`;}
+ else if(g&lt;=4){kind=Math.floor(Math.random()*4);if(kind===0){a=10+Math.floor(Math.random()*90);b=10+Math.floor(Math.random()*90);ans=a+b;q=`What is ${a} + ${b}?`;}else if(kind===1){a=10+Math.floor(Math.random()*90);b=10+Math.floor(Math.random()*90);if(b&gt;a)[a,b]=[b,a];ans=a-b;q=`What is ${a} − ${b}?`;}else if(kind===2){a=2+Math.floor(Math.random()*12);b=2+Math.floor(Math.random()*12);ans=a*b;q=`What is ${a} × ${b}?`;}else{b=2+Math.floor(Math.random()*12);ans=2+Math.floor(Math.random()*12);a=b*ans;q=`What is ${a} ÷ ${b}?`;}}
+ else if(g&lt;=8){kind=Math.floor(Math.random()*4);if(kind===0){a=12+Math.floor(Math.random()*80);b=2+Math.floor(Math.random()*12);ans=a*b;q=`What is ${a} × ${b}?`;}else if(kind===1){b=2+Math.floor(Math.random()*12);ans=2+Math.floor(Math.random()*40);a=b*ans;q=`What is ${a} ÷ ${b}?`;}else if(kind===2){a=2+Math.floor(Math.random()*18);b=2+Math.floor(Math.random()*18);ans=a*b;q=`A rectangle is ${a} cm long and ${b} cm wide. What is its area?`;}else{const pct=[10,20,25,50][Math.floor(Math.random()*4)];b=(2+Math.floor(Math.random()*18))*10;ans=pct*b/100;q=`What is ${pct}% of ${b}?`;}}
+ else{kind=Math.floor(Math.random()*4);if(kind===0){a=2+Math.floor(Math.random()*20);b=a+2+Math.floor(Math.random()*20);ans=b-a;q=`Solve for x: x + ${a} = ${b}.`;}else if(kind===1){a=2+Math.floor(Math.random()*15);ans=a*a;q=`Evaluate ${a}².`;}else if(kind===2){const pct=[5,10,12,15,20,25][Math.floor(Math.random()*6)];b=(2+Math.floor(Math.random()*30))*10;ans=pct*b/100;q=`What is ${pct}% of ${b}?`;}else{a=2+Math.floor(Math.random()*20);b=2+Math.floor(Math.random()*20);ans=a+b;q=`If x = ${a}, what is x + ${b}?`;}}
+ const wrong=[];const offsets=[-10,-5,-3,-2,-1,1,2,3,5,10];let tries=0;while(wrong.length&lt;3&amp;&amp;tries++&lt;100){const n=ans+offsets[Math.floor(Math.random()*offsets.length)];if(n&gt;=0&amp;&amp;n!==ans&amp;&amp;!wrong.includes(n))wrong.push(n)}let n=1;while(wrong.length&lt;3){if(ans+n!==ans&amp;&amp;!wrong.includes(ans+n))wrong.push(ans+n);n++}
+ return {q,a:String(ans),o:shuffleList([String(ans),...wrong.map(String)]),max:12};
+}
+function getQuestion(){
+ const g=+$('grade').value,s=$('subject').value;state.grade=g;state.subject=s;
+ // Use an endless stream of freshly generated, grade-level maths questions whenever maths is selected.
+ if(s==='math'){
+  let generated=makeGameMath(g),tries=0;while(generated.q===state.lastQuestion&amp;&amp;tries++&lt;8)generated=makeGameMath(g);state.lastQuestion=generated.q;return generated;
+ }
+ let pool=s==='mixed'?Object.values(questions).flat():questions[s];pool=(pool||questions.science).filter(q=&gt;g&lt;=q.max+4);
+ if(!pool.length)pool=questions.math;
+ let available=pool.filter(q=&gt;q.q!==state.lastQuestion);if(!available.length)available=pool;
+ const picked=available[Math.floor(Math.random()*available.length)];state.lastQuestion=picked.q;
+ const distractors=[...new Set(pool.flatMap(item=&gt;item.o||[]).concat(pool.map(item=&gt;item.a)).filter(value=&gt;value!==picked.a))];
+ const wrong=shuffleList(distractors).slice(0,3);
+ for(const fallback of picked.o){if(wrong.length&gt;=3)break;if(fallback!==picked.a&amp;&amp;!wrong.includes(fallback))wrong.push(fallback)}
+ return {...picked,o:shuffleList([picked.a,...wrong])};
+}
+function showQuestion(){
+ const q=getQuestion();state.correct=q.a;state.active=true;state.locked=false;state.question++;
+ $('qMeta').textContent=`Question ${state.question} · Grade ${state.grade}`;$('question').textContent=q.q;$('feedback').textContent='Choose an answer to earn knowledge points.';$('next').disabled=true;
+ $('progress').style.width=((state.answered%10)*10)+'%';$('answers').innerHTML='';
+ q.o.forEach(txt=&gt;{const b=document.createElement('button');b.textContent=txt;b.addEventListener('click',()=&gt;answer(txt,b));$('answers').appendChild(b)});
+}
+function answer(txt,button){if(state.locked)return;state.locked=true;state.answered++;const ok=txt===state.correct;
+ if(ok){state.points+=10;state.streak++;$('feedback').textContent='⭐ Correct! +10 knowledge points. Great learning!';$('feedback').style.color='#13845d';button.classList.add('correct')}
+ else{state.streak=0;$('feedback').textContent='Good try! The answer is “'+state.correct+'”. Keep practising!';$('feedback').style.color='#a14a25';button.classList.add('wrong');[...$('answers').children].forEach(b=&gt;{if(b.textContent===state.correct)b.classList.add('correct')})}
+ [...$('answers').children].forEach(b=&gt;b.disabled=true);$('points').textContent=state.points;$('streak').textContent=state.streak;$('level').textContent=Math.floor(state.points/50)+1;$('next').disabled=false;$('progress').style.width=((state.answered%10)*10||100)+'%';
+}
+function explore(){showQuestion();$('quiz').scrollIntoView({behavior:'auto',block:'nearest'})}
+function reset(){state.x=0;state.z=0;state.points=0;state.streak=0;state.answered=0;state.question=0;state.active=false;state.locked=false;$('points').textContent='0';$('streak').textContent='0';$('level').textContent='1';$('answers').innerHTML='';$('question').textContent='Walk to the glowing portal and choose Explore portal to begin!';$('feedback').textContent='You can change grade and subject at any time.';$('next').disabled=true;$('progress').style.width='0%';draw()}
+const keys={ArrowUp:[0,-.35],w:[0,-.35],ArrowDown:[0,.35],s:[0,.35],ArrowLeft:[-.35,0],a:[-.35,0],ArrowRight:[.35,0],d:[.35,0]};
+const worldCanvas=$('world');
+worldCanvas.style.cursor='pointer';worldCanvas.style.outlineOffset='-4px';
+worldCanvas.addEventListener('pointerdown',()=&gt;worldCanvas.focus());
+worldCanvas.addEventListener('click',()=&gt;worldCanvas.focus());
+window.addEventListener('keydown',e=&gt;{
+ const key=e.key.length===1?e.key.toLowerCase():e.key;
+ if(keys[key]){e.preventDefault();move(...keys[key]);return}
+ if(key==='e'||key==='Enter'){e.preventDefault();explore()}
+});
+$('left').onclick=()=&gt;move(-.45,0);$('right').onclick=()=&gt;move(.45,0);$('forward').onclick=()=&gt;move(0,-.45);$('back').onclick=()=&gt;move(0,.45);$('explore').onclick=explore;$('reset').onclick=reset;$('newQuest').onclick=showQuestion;$('next').onclick=showQuestion;
+$('grade').onchange=()=&gt;{if(state.active)showQuestion();draw()};$('subject').onchange=()=&gt;{if(state.active)showQuestion()};
+window.addEventListener('resize',resize);resize();
+&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;" style="display:block;width:100%;height:900px;border:1px solid #dbe4f2;border-radius:18px;background:#edf2fb" title="Knowledge Quest 3D learning game"></iframe>
+</section>
+</main>
+<footer class="footer">Learning Hub · Grades 1–12 · Keep asking questions and keep learning.</footer>
+<script>
+const subjects=[
+{key:"math",name:"Mathematics",icon:"➗",desc:"Numbers, counting, adding, subtracting, shapes, measuring, and more.",topics:["Numbers & counting","Adding, subtracting & patterns","Shapes, time & measurement"],levels:["Count to 10 and recognize numbers","Count to 100; add and subtract small numbers","Practice times tables, sharing and simple fractions","Work with larger numbers, fractions and area","Practice decimals, fractions and basic algebra","Explore percentages, ratios, equations and geometry"],type:"math"},
+{key:"science",name:"Science",icon:"🔬",desc:"Explore animals, plants, weather, our bodies, materials, Earth, and space.",topics:["Plants, animals & people","Weather, seasons & materials","Earth, space & simple experiments"],levels:["Learn about plants, animals and weather","Explore senses, seasons and materials","Study habitats, life cycles and simple forces","Explore rocks, energy and ecosystems","Learn about body systems, matter and space","Study cells, ecosystems, forces and scientific experiments"],type:"science"},
+{key:"language",name:"Language Arts",icon:"📚",desc:"Practise letters, sounds, reading stories, spelling, sentences, and writing.",topics:["Letters, words & reading","Spelling & simple grammar","Stories, sentences & writing"],levels:["Recognize letters, sounds and simple words","Read short stories and write simple sentences","Read longer stories and write paragraphs","Build vocabulary and write clear paragraphs","Write organized reports and stories","Develop essays, reading skills and research"],type:"language"},
+{key:"social",name:"Social Studies",icon:"🌎",desc:"Learn about families, communities, maps, places, history, and people around the world.",topics:["Families & communities","Maps, places & celebrations","People, history & the world"],levels:["Learn about family, school and community helpers","Explore maps, neighbourhoods and rules","Learn about communities, maps and the past","Explore Canadian communities, geography and history","Study early societies, Canada and world cultures","Explore Canadian history, world geography and government"],type:"social"},
+{key:"languages",name:"Foreign Languages",icon:"🗣️",desc:"Learn simple words and greetings in Spanish, French, German, Mandarin, Latin, and Italian.",topics:["Greetings, colours & numbers","Everyday words & phrases","Listening, speaking & culture"],levels:["Try greetings, colours and counting","Learn everyday words and short phrases","Practise simple questions and sentences","Describe people, places and daily activities","Build conversations and reading skills","Develop longer conversations, writing and cultural knowledge"],type:"languages"},
+{key:"religion",name:"Religion & Beliefs",icon:"🕊️",desc:"Explore stories, celebrations, kindness, traditions, and different beliefs respectfully.",topics:["Stories & celebrations","Kindness, fairness & helping","Traditions & beliefs"],levels:["Learn about kindness, stories and celebrations","Explore caring, sharing and family traditions","Learn about special places, stories and celebrations","Explore traditions, symbols and helping others","Learn about different religions and ethical choices","Compare beliefs, traditions and ethical ideas respectfully"],type:"religion"},
+{key:"computing",name:"Computer Science",icon:"💻",desc:"Develop digital literacy, computational thinking, coding, data, and online safety.",topics:["Digital citizenship & safety","Coding & computational thinking","Data, networks & technology"],levels:["Using devices safely","Sequences and simple coding","Loops, events and debugging","Variables, logic and digital projects","Programming, data and web basics","Algorithms, software design and computing systems"],type:"computing"},
+{key:"arts",name:"Art & Design",icon:"🎨",desc:"Create and discuss art using colour, shape, drawing, design, and visual communication.",topics:["Drawing, painting & making","Design & visual elements","Art history & creative projects"],levels:["Lines, shapes and colours","Patterns, textures and materials","Composition and mixed media","Perspective and design principles","Art movements and visual analysis","Portfolio development and critical evaluation"],type:"arts"},
+{key:"music",name:"Music",icon:"🎵",desc:"Explore rhythm, melody, instruments, singing, composition, and music from around the world.",topics:["Rhythm & melody","Instruments & performance","Composition & music history"],levels:["Beat, singing and listening","Rhythm patterns and instruments","Notation and ensemble skills","Melody, harmony and world music","Composition and music theory","Advanced theory, arranging and analysis"],type:"music"},
+{key:"pe",name:"Physical Education",icon:"⚽",desc:"Learn movement skills, teamwork, fitness concepts, sportsmanship, and lifelong activity.",topics:["Movement & coordination","Games, teamwork & strategy","Fitness, wellness & safety"],levels:["Balance, movement and play","Throwing, catching and teamwork","Movement skills and fair play","Game strategies and healthy habits","Training principles and teamwork","Personal activity planning and sports analysis"],type:"pe"},
+{key:"health",name:"Health & Wellness",icon:"❤️",desc:"Study wellbeing, nutrition, safety, relationships, decision-making, and healthy routines.",topics:["Body systems & wellbeing","Nutrition, safety & prevention","Mental wellbeing & relationships"],levels:["Hygiene, feelings and safety","Food groups and healthy habits","Body changes and personal safety","Wellbeing, choices and relationships","Health information and decision-making","Health literacy, stress management and prevention"],type:"health"},
+{key:"life",name:"Life Skills",icon:"🧭",desc:"Practise organization, communication, problem-solving, goal-setting, and everyday planning.",topics:["Study skills & organization","Communication & problem-solving","Goals, planning & responsibility"],levels:["Routines and taking turns","Following directions and organizing","Planning homework and solving problems","Study strategies and teamwork","Goal setting and decision-making","Independent planning, collaboration and future pathways"],type:"life"},
+{key:"economics",name:"Economics & Financial Literacy",icon:"💰",desc:"Understand needs and wants, saving, budgeting, markets, resources, and economic choices.",topics:["Needs, wants & resources","Saving, spending & budgeting","Markets, trade & economic systems"],levels:["Needs, wants and coins","Saving and spending choices","Goods, services and simple budgets","Planning, costs and resources","Markets, trade and economic systems","Personal finance, incentives and economic analysis"],type:"economics"}
+];
+const gradeEl=document.getElementById("grade"),searchEl=document.getElementById("search"),grid=document.getElementById("subjects");
+for(let g=1;g<=12;g++){const o=document.createElement("option");o.value=g;o.textContent="Grade "+g;gradeEl.appendChild(o)}
+// Restore the learner's previously selected grade on this device.
+const savedGradeKey="learningHubSelectedGradeV1";
+try{const savedGrade=Number(localStorage.getItem(savedGradeKey));if(savedGrade>=1&&savedGrade<=12)gradeEl.value=String(savedGrade)}catch(e){}
+const state={subject:null,answer:null,correct:null,questionIndex:0};
+const profileKey="learningHubAccountV1";
+let profile={name:"",answered:0,correct:0};
+try{profile={...profile,...JSON.parse(localStorage.getItem(profileKey)||"{}")}}catch(e){}
+function saveProfile(){try{localStorage.setItem(profileKey,JSON.stringify(profile))}catch(e){}}
+function refreshAccount(){document.getElementById("accountName").value=profile.name||"";document.getElementById("profileChip").textContent=profile.name?"👋 "+profile.name:"";document.getElementById("profileChip").style.display=profile.name?"inline-block":"none";updateProgress();document.getElementById("accountAnswered").textContent=profile.answered||0;document.getElementById("accountCorrect").textContent=profile.correct||0;document.getElementById("accountRate").textContent=(profile.answered?Math.round(profile.correct/profile.answered*100):0)+"%";document.getElementById("accountMessage").textContent=profile.name?`Keep it up, ${profile.name}! Your progress is saved on this device.`:"Add your name to personalize your learning profile. Your stats update as you practise."}
+function updateProgress(){const n=profile.answered||0;document.getElementById("progressText").textContent=`${n} question${n===1?"":"s"} answered · ${profile.correct||0} correct`;document.getElementById("progressFill").style.width=(n?Math.round((profile.correct||0)/n*100):0)+"%";document.getElementById("welcomeSubtitle").textContent=profile.name?`Great to see you, ${profile.name}! Choose a subject to keep learning.`:"Choose a subject to explore its learning topics and practise.";}
+function openAccount(){refreshAccount();document.getElementById("accountBackdrop").classList.add("open");document.getElementById("accountName").focus()}
+document.getElementById("openAccount").addEventListener("click",openAccount);
+document.getElementById("closeAccount").addEventListener("click",()=>document.getElementById("accountBackdrop").classList.remove("open"));
+document.getElementById("accountBackdrop").addEventListener("click",e=>{if(e.target.id==="accountBackdrop")e.currentTarget.classList.remove("open")});
+document.getElementById("saveAccount").addEventListener("click",()=>{profile.name=document.getElementById("accountName").value.trim();saveProfile();refreshAccount();render();document.getElementById("accountMessage").textContent="Profile saved on this device."});
+document.getElementById("accountName").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("saveAccount").click()});
+function stageIndex(g){return g<=2?0:g<=4?1:g<=6?2:g<=8?3:g<=10?4:5}
+function render(){
+ const g=+gradeEl.value,term=searchEl.value.trim().toLowerCase();
+ document.getElementById("welcomeTitle").textContent=profile.name?`Welcome back, ${profile.name}!`:`Welcome to Grade ${g}!`;
+ const list=subjects.filter(s=>(s.name+" "+s.desc+" "+s.topics.join(" ")).toLowerCase().includes(term));
+ document.getElementById("resultCount").textContent=`${list.length} subject${list.length===1?"":"s"}`;
+ grid.innerHTML="";
+ if(!list.length){grid.innerHTML='<div class="empty">No subjects found. Try another search.</div>';return}
+ list.forEach(s=>{
+ const card=document.createElement("article");card.className="subject";
+ card.innerHTML=`<div class="subject-top"><div class="emoji">${s.icon}</div><div><h3>${s.name}</h3><small>Grade ${g}</small></div></div><p>${s.desc}</p><button type="button">Explore subject →</button>`;
+ card.querySelector("button").addEventListener("click",()=>openSubject(s));grid.appendChild(card)
+ })
+}
+function chooseActivity(activity){
+ if(activity==="game"){
+   document.getElementById("knowledge-quest").scrollIntoView({behavior:"auto",block:"start"});
+   return;
+ }
+ const picker=document.getElementById("activityPicker");
+ const resources=document.getElementById("resources");
+ const quiz=document.querySelector("#panel .quiz");
+ const back=document.getElementById("activityBack");
+ picker.classList.add("activity-hidden");
+ back.classList.remove("activity-hidden");
+ resources.classList.toggle("activity-hidden",activity!=="learn");
+ quiz.classList.toggle("activity-hidden",activity==="learn");
+ if(activity==="practice"){
+   quiz.querySelector("h3").textContent="✏️ Practice questions";
+   quiz.querySelector(".panel-intro").textContent="Try one question at a time. Choose an answer to get instant feedback, then generate another question.";
+ }else if(activity==="quiz"){
+   quiz.querySelector("h3").textContent="🏆 Quiz challenge";
+   quiz.querySelector(".panel-intro").textContent="Challenge yourself with a series of questions. Answer each one, then choose New question to continue and build your score.";
+ }
+ document.getElementById("panel").scrollIntoView({behavior:"auto",block:"start"});
+}
+document.querySelectorAll("[data-activity]").forEach(button=>button.addEventListener("click",()=>chooseActivity(button.dataset.activity)));
+document.getElementById("activityBack").addEventListener("click",()=>{
+ document.getElementById("activityPicker").classList.remove("activity-hidden");
+ document.getElementById("activityBack").classList.add("activity-hidden");
+ document.getElementById("resources").classList.remove("activity-hidden");
+ document.querySelector("#panel .quiz").classList.remove("activity-hidden");
+ document.querySelector("#panel .quiz h3").textContent="Quick practice";
+ document.querySelector("#panel .quiz .panel-intro").textContent="Try a question for your selected grade. Choose an answer to check it, then generate another question.";
+});
+function openSubject(s){
+ state.subject=s;state.answer=null;
+ document.getElementById("activityPicker").classList.remove("activity-hidden");
+ document.getElementById("activityBack").classList.add("activity-hidden");
+ document.getElementById("resources").classList.remove("activity-hidden");
+ document.querySelector("#panel .quiz").classList.remove("activity-hidden");
+ document.querySelector("#panel .quiz h3").textContent="Quick practice";
+ document.querySelector("#panel .quiz .panel-intro").textContent="Try a question for your selected grade. Choose an answer to check it, then generate another question.";
+ document.getElementById("panel").classList.add("active");
+ document.getElementById("panelTitle").textContent=s.icon+" "+s.name+" · Grade "+gradeEl.value;
+ const idx=stageIndex(+gradeEl.value);
+ document.getElementById("panelIntro").textContent=`Explore ${s.name.toLowerCase()} with grade-appropriate topics. ${s.levels[idx]}.`;
+ document.getElementById("resources").innerHTML=s.topics.map((t,i)=>`<div class="resource"><h3>${["📖","🧩","✏️"][i]} ${t}</h3><p>${["Learn key ideas with examples, reading, and guided practice.","Connect what you know to real-world situations and new concepts.","Review your understanding and explain your thinking in your own words."][i]}</p></div>`).join("");
+ makeQuestion();document.getElementById("panel").scrollIntoView({behavior:"auto",block:"start"})
+}
+function rand(n){return Math.floor(Math.random()*n)}
+function shuffleAnswers(list){const a=[...list];for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+function pickQuestion(pool){let choices=pool.filter(item=>item[0]!==state.lastQuestion);if(!choices.length)choices=pool;const item=choices[rand(choices.length)];state.lastQuestion=item[0];return item}
+function makeMathQuestion(g){
+ let q='',result=0,wrong=[],a,b,op;
+ if(g<=2){const max=g===1?10:100;a=rand(max+1);b=rand(max+1);op=rand(2)?'+':'−';if(op==='−'&&b>a)[a,b]=[b,a];result=op==='+'?a+b:a-b;q=`What is ${a} ${op} ${b}?`;}
+ else if(g<=4){const kind=rand(4);if(kind===0){a=rand(900)+100;b=rand(900)+100;result=a+b;q=`What is ${a} + ${b}?`;}else if(kind===1){a=rand(900)+100;b=rand(900)+100;if(b>a)[a,b]=[b,a];result=a-b;q=`What is ${a} − ${b}?`;}else if(kind===2){a=rand(12)+2;b=rand(12)+2;result=a*b;q=`What is ${a} × ${b}?`;}else{b=rand(11)+2;result=rand(12)+2;a=b*result;q=`What is ${a} ÷ ${b}?`;}}
+ else if(g<=6){const kind=rand(5);if(kind===0){a=rand(99)+1;b=rand(99)+1;result=a*b;q=`What is ${a} × ${b}?`;}else if(kind===1){b=rand(11)+2;result=rand(20)+2;a=b*result;q=`What is ${a} ÷ ${b}?`;}else if(kind===2){a=rand(80)+20;b=rand(80)+20;result=a+b;q=`What is ${a} + ${b}?`;}else if(kind===3){const n=[10,20,25,50][rand(4)];a=(rand(9)+1)*n;result=a*n/100;q=`What is ${n}% of ${a}?`;}else{a=rand(12)+3;b=rand(12)+3;result=2*(a+b);q=`A rectangle is ${a} cm long and ${b} cm wide. What is its perimeter?`;}}
+ else if(g<=8){const kind=rand(5);if(kind===0){a=rand(20)+5;b=rand(20)+5;result=a*b;q=`What is ${a} × ${b}?`;}else if(kind===1){a=rand(20)+5;b=rand(20)+5;result=a*b;q=`A rectangle is ${a} cm long and ${b} cm wide. What is its area?`; }else if(kind===2){a=rand(12)+2;b=rand(15)+3;result=a+b;q=`Solve for x: x − ${a} = ${b}.`;result=b+a;}else if(kind===3){a=[10,20,25,50][rand(4)];b=(rand(8)+2)*10;result=a*b/100;q=`What is ${a}% of ${b}?`;}else{a=rand(11)+2;result=a*a;q=`What is ${a} squared (${a}²)?`;}}
+ else {const kind=rand(6);if(kind===0){a=rand(15)+2;b=rand(25)+3;result=b-a;q=`Solve for x: x + ${a} = ${b}.`; }else if(kind===1){a=rand(12)+2;result=a*a;q=`Evaluate ${a}².`;}else if(kind===2){a=rand(15)+5;b=rand(15)+5;result=a*b;q=`What is ${a} × ${b}?`;}else if(kind===3){a=[5,10,12,15,20,25][rand(6)];b=(rand(15)+2)*10;result=a*b/100;q=`What is ${a}% of ${b}?`;}else if(kind===4){a=rand(9)+2;b=rand(9)+2;result=a+b;q=`If x = ${a}, what is x + ${b}?`;}else{a=rand(8)+2;b=rand(8)+2;result=a*a+b*b;q=`For a right triangle with legs ${a} and ${b}, what is the square of the hypotenuse length?`;}}
+ const offsets=[-10,-5,-3,-2,-1,1,2,3,5,10,Math.max(2,Math.round(Math.abs(result)*.1))];
+ wrong=[];for(let tries=0;wrong.length<3&&tries<100;tries++){const candidate=result+offsets[rand(offsets.length)]*(rand(2)?1:1);if(candidate!==result&&candidate>=0&&!wrong.includes(candidate))wrong.push(candidate)}
+ let bump=1;while(wrong.length<3){if(result+bump!==result&&!wrong.includes(result+bump)&&result+bump>=0)wrong.push(result+bump);bump++}
+ return {q,correct:String(result),options:shuffleAnswers([String(result),...wrong.slice(0,3).map(String)])};
+}
+function makeQuestion(){
+ const s=state.subject;if(!s)return;state.answer=null;state.questionIndex++;
+ const g=+gradeEl.value;let q,correct,options;
+ if(s.type==='math'){
+   let item=makeMathQuestion(g);let attempts=0;while(item.q===state.lastQuestion&&attempts++<8)item=makeMathQuestion(g);q=item.q;correct=item.correct;options=item.options;state.lastQuestion=q;
+ }else{
+  const bank={
+   science:[
+    ['What do plants need to grow?','Water, light and nutrients',['Plastic toys','Only darkness','No water at all']],['Which animal is a mammal?','Dolphin',['Trout','Frog','Butterfly']],['What force pulls objects toward Earth?','Gravity',['Magnetism only','Sound','Frictionless motion']],['What is water changing into vapour called?','Evaporation',['Freezing','Condensation','Melting']],['Which part of a plant absorbs most water?','Roots',['Petals','Fruit','Flower']],['What is the centre of our solar system?','The Sun',['Earth','The Moon','Jupiter']],['Which state of matter has a fixed shape?','Solid',['Liquid','Gas','Vapour only']],['What do bees help many plants do?','Pollinate flowers',['Make soil disappear','Create sunlight','Stop seeds growing']],['What is an ecosystem?','Living things interacting with their environment',['One animal by itself only','A type of rock','A weather instrument']],['Which gas do plants take in during photosynthesis?','Carbon dioxide',['Helium','Neon','Hydrogen only']],['What does a fair test change?','One main variable at a time',['Every variable at once','No measurements','Only the conclusion']],['What is the role of DNA in cells?','It carries genetic instructions',['It digests food in the stomach','It makes gravity','It stores sound waves']]
+   ],
+   language:[
+    ['Which word names a person, place, or thing?','Noun',['Verb','Adjective','Adverb']],['Which word rhymes with “bright”?','Light',['Book','Tree','Warm']],['What punctuation ends a question?','Question mark (?)',['Period only','Comma','Apostrophe']],['Which is a complete sentence?','The dog ran home.',['Ran dog the','Home the ran','Dog running to']],['What is a synonym for “quick”?','Fast',['Dull','Late','Quiet']],['What is the main idea of a text?','What it is mostly about',['The page number','The longest word only','The last punctuation mark']],['Which word is an adjective?','Sparkling',['Jump','Carefully','Happily']],['What does a paragraph usually develop?','One main idea',['A random list of letters','Only page numbers','A single punctuation mark']],['What is a metaphor?','A comparison that says one thing is another',['A spelling mistake','A question word','A list of dates']],['What is a reliable source?','A source with trustworthy, checkable information',['An anonymous claim with no evidence','A random guess','An advert that proves everything']]
+   ],
+   social:[
+    ['What does a map help us find?','Places',['A food flavour','A song’s sound','A smell']],['Who helps people borrow books?','A librarian',['A pilot','A mechanic','A dentist']],['What is a community?','People connected by where they live or shared interests',['A type of cloud','A mountain only','A number pattern']],['What does a compass help show?','Direction',['Temperature','Time of day','How heavy an object is']],['What is a primary source?','Evidence from the time or event being studied',['A modern summary only','A fictional story always','A dictionary word only']],['Why do communities have rules?','To help people live and work together safely',['To stop all questions','To make every person identical','To remove responsibilities']],['What is a landform?','A natural feature of Earth’s surface',['A type of government','A story character','A measurement of time']],['What does a government do?','Makes decisions and organizes public services',['Controls the weather','Changes the past','Creates all natural resources']],['What is migration?','Moving from one place to another to live',['A kind of rainfall','A map symbol only','A type of mineral']],['Why compare historical sources?','To check perspectives and evidence',['To avoid asking questions','To assume all sources agree','To replace evidence with guesses']]
+   ],
+   languages:[
+    ['What does “Hola” mean in Spanish?','Hello',['Goodbye','Please','Thank you']],['What does “Gracias” mean in Spanish?','Thank you',['Hello','Good night','Please']],['What does “Bonjour” mean in French?','Hello / good day',['Goodbye','Sorry','Please']],['What does “Merci” mean in French?','Thank you',['Hello','Good night','Goodbye']],['What does “Guten Tag” mean in German?','Good day',['Thank you','Goodbye','Please']],['What does “Danke” mean in German?','Thank you',['Hello','Please','Good night']],['What does “Ciao” mean in Italian?','Hello or goodbye',['Please only','Thank you only','Good morning only']],['What does “Grazie” mean in Italian?','Thank you',['Hello','Goodbye','Excuse me']],['What does “Salve” mean in Latin?','Hello / greetings',['Water','Book','Thank you']],['What does “Amicus” mean in Latin?','Friend',['House','Moon','Water']],['What does “Nǐ hǎo” mean in Mandarin?','Hello',['Goodbye','Thank you','Please']],['What does “Xièxie” mean in Mandarin?','Thank you',['Hello','Friend','Good night']],['What does “Por favor” mean in Spanish?','Please',['Goodbye','Hello','Sorry']],['What does “Au revoir” mean in French?','Goodbye',['Thank you','Please','Good morning']],['What does “Bitte” mean in German?','Please / you’re welcome',['Goodbye only','Friend','Moon']],['What does “Buongiorno” mean in Italian?','Good morning / good day',['Goodbye','Please','Thank you']]
+   ],
+   religion:[
+    ['What is a kind thing to do?','Help someone who needs it',['Laugh at someone who is sad','Leave people out on purpose','Break shared things']],['What is a tradition?','Something a family or group passes along',['A type of weather','A math answer','A wild animal']],['What does respect mean?','Treating people with care and fairness',['Agreeing with everyone about everything','Ignoring other people','Making fun of differences']],['What is a place of worship?','A place some people gather for religious practice',['A type of sport','A science instrument','A weather map']],['Why learn about different beliefs respectfully?','To understand people and communities better',['To assume everyone believes the same thing','To make fun of traditions','To avoid learning history']],['What is a value?','A principle someone thinks is important',['A kind of cloud','A measurement unit only','A map direction']],['What can stories teach?','Ideas, values, and lessons',['Only how to calculate area','How to change the weather','Nothing about people']],['What is a charitable action?','Helping people or causes in need',['Taking shared items for yourself','Excluding others','Wasting resources on purpose']]
+   ],
+   computing:[
+    ['What is an algorithm?','Steps to solve a problem',['A computer chair','A screen colour','A game character only']],['What should you do with your password?','Keep it private',['Post it publicly','Tell strangers','Use the word “password”']],['What is a loop in coding?','Instructions that repeat',['A broken monitor','A computer cable','A type of font']],['What does debugging mean?','Finding and fixing problems in code',['Deleting every file','Turning off the keyboard','Changing screen brightness']],['What is a variable?','A named place to store a value',['A type of mouse pad','A website address only','A computer fan']],['What makes a strong password?','A long, unique mix that is hard to guess',['Your first name only','123456','The same password everywhere']],['What does a conditional do in a program?','Chooses actions based on a condition',['Repeats forever by definition','Deletes all variables','Prints without instructions']],['What is data?','Information that can be collected and analyzed',['Only computer hardware','A kind of battery','A type of chair']]
+   ],
+   arts:[
+    ['Which tool can you use to draw?','Pencil',['Fork only','Shoe lace','Pillow']],['Which are primary colours in traditional paint mixing?','Red, yellow and blue',['Pink, black and white','Green and purple only','Gold and silver']],['What is texture in art?','How a surface looks or feels',['The speed of a song','The weight of a story','A type of map']],['What is a pattern?','A repeated design or arrangement',['A random one-time sound only','A measurement of temperature','A kind of punctuation']],['What is contrast in design?','A noticeable difference between elements',['Making everything identical','Removing all shapes','Using no visual changes']],['What is a sculpture?','A three-dimensional artwork',['A short poem only','A musical scale','A map key']],['What is perspective in drawing?','A way to show depth and distance',['A type of glue','A colour name','A rhythm pattern']],['What is composition?','How parts of an artwork are arranged',['The price of paint only','A list of tools only','The artist’s shoe size']]
+   ],
+   music:[
+    ['Which instrument can make music?','Drum',['Pillow only','Book page only','A bowl of cereal']],['What is a beat?','A steady pulse in music',['A type of paint','A map symbol','A kind of plant']],['Which instrument has keys?','Piano',['Triangle ruler','Soccer ball','Paintbrush']],['What is tempo?','The speed of music',['The colour of an instrument','The size of a stage only','The lyrics’ spelling']],['What is melody?','A sequence of musical notes',['A type of drumstick','A loudness marking only','A theatre seat']],['What does dynamics describe in music?','How loud or soft it is',['How tall a singer is','The instrument’s colour','The room’s temperature']],['What is rhythm?','Patterns of sounds and silences over time',['A painting technique','A map scale','A kind of chord chart only']],['What is harmony?','Notes sounding together to support a melody',['A silent room','A solo drumbeat only','The speed of reading']]
+   ],
+   pe:[
+    ['What is good teamwork?','Taking turns and encouraging others',['Never passing the ball','Blaming everyone','Ignoring rules']],['Why drink water during activity?','To help your body stay hydrated',['To make shoes lighter','To change the weather','To avoid warming up']],['What should you do before intense exercise?','Warm up gradually',['Skip preparation every time','Hold your breath','Ignore pain or dizziness']],['What is fair play?','Following rules and respecting others',['Winning at any cost','Changing rules secretly','Mocking opponents']],['Why practise a movement skill?','To improve control and confidence',['To guarantee nobody makes mistakes','To avoid learning','To make rules disappear']],['What is endurance?','The ability to keep going during activity',['How quickly you can read','A type of ball','A stretching pose only']],['Why wear suitable safety equipment?','To help reduce injury risk',['To make rules unnecessary','To guarantee no accidents can happen','To avoid teamwork']],['What is cooperation?','Working together toward a shared goal',['Doing the opposite of the group','Refusing to communicate','Ignoring assigned roles']]
+   ],
+   health:[
+    ['Which habit helps keep teeth healthy?','Brush your teeth',['Never clean them','Eat only candy','Avoid water']],['Who can you talk to when you need help?','A trusted adult',['A stranger online','Nobody ever','Someone who makes you feel unsafe']],['Why is sleep important?','It helps your body and brain rest',['It replaces all food and water','It makes hygiene unnecessary','It means you never need breaks']],['What is a balanced meal?','A mix of foods that provide different nutrients',['Only one food forever','Only sweets','No food groups at all']],['What is a healthy way to handle stress?','Take a break and talk to someone you trust',['Keep every worry secret forever','Never rest','Blame others automatically']],['Why wash your hands?','To help remove germs',['To make germs stronger','To replace sleep','To clean your thoughts']],['What is consent?','Freely agreeing to something with the ability to say no',['Assuming everyone agrees','A rule that never changes','Something only adults can discuss']],['What is a reliable health source?','A qualified professional or trusted public-health source',['An unverified rumour','A random post with no evidence','A product ad alone']]
+   ],
+   life:[
+    ['What can help you remember homework?','Write it in a planner',['Forget the due date','Hide your books','Wait until you forget']],['What is a good way to solve a problem?','Try one step at a time',['Give up before trying','Blame a friend','Ignore every idea']],['What helps make a goal achievable?','Break it into smaller steps',['Never make a plan','Make it impossible on purpose','Avoid checking progress']],['What is active listening?','Paying attention and checking you understand',['Interrupting every sentence','Looking away and ignoring','Guessing what someone said']],['What should you do if a task feels too large?','Divide it into manageable parts',['Avoid it forever','Do every part at the same time','Throw away the instructions']],['What is a useful study habit?','Review information regularly',['Wait until the last minute every time','Study while ignoring the material','Never take breaks']],['How can you resolve a disagreement?','Listen, explain calmly, and seek a fair solution',['Insult the other person','Refuse to listen','Spread rumours']],['What is a deadline?','The time by which work should be completed',['A type of notebook','A reward point','A break activity']]
+   ],
+   economics:[
+    ['What does saving mean?','Keeping money to use later',['Spending it all right away','Throwing it away','Giving away your wallet']],['If you have 5 coins and spend 2, how many are left?','3',['2','5','7']],['What is a need?','Something essential for living safely and well',['Anything you see in a shop','A luxury item every time','A brand name']],['What is a budget?','A plan for income and spending',['A shopping bag','A type of coin','A wish list without prices']],['What is a producer?','Someone who makes a good or provides a service',['Someone who only consumes goods','A type of currency','A bank receipt']],['Why compare prices?','To make an informed spending choice',['To make every product identical','To avoid knowing the cost','To guarantee every item is free']],['What is opportunity cost?','The next-best option given up when making a choice',['The total number of coins in a jar','A shop opening time','A free item every time']],['What can interest do to savings?','Help savings grow over time',['Always make money disappear','Turn savings into groceries automatically','Remove the need for a plan']]
+   ]
+  };
+  let pool=bank[s.type]||bank.science;
+  if(g>=9&&s.type==='science')pool=pool.filter(x=>/ecosystem|DNA|fair test|gravity|state of matter|solar system/i.test(x[0]));
+  if(g>=9&&s.type==='language')pool=pool.filter(x=>/reliable source|metaphor|paragraph|main idea/i.test(x[0]));
+  let item=pickQuestion(pool);q=item[0];correct=item[1];
+  // Build fresh distractors each round from this subject's answer bank, then shuffle all choices.
+  // Keep the correct answer fixed, but vary the three incorrect choices and their positions.
+  const distractorPool=[...new Set(pool.flatMap(entry=>[...(entry[2]||[]),entry[1]]).filter(value=>value!==correct))];
+  const freshWrong=shuffleAnswers(distractorPool).slice(0,3);
+  for(const fallback of (item[2]||[])){if(freshWrong.length>=3)break;if(fallback!==correct&&!freshWrong.includes(fallback))freshWrong.push(fallback)}
+  options=shuffleAnswers([correct,...freshWrong]);
+ }
+ // Avoid the same wording twice in a row, even when randomly generated numbers collide.
+ if(q===state.lastQuestion&&s.type==='math'){let tries=0;while(q===state.lastQuestion&&tries++<5){const fresh=makeMathQuestion(g);q=fresh.q;correct=fresh.correct;options=fresh.options}}
+ state.lastQuestion=q;state.correct=correct;
+ document.getElementById('question').textContent=q;
+ document.getElementById('feedback').textContent='';
+ const answerBox=document.getElementById('answers');answerBox.innerHTML='';
+ options.forEach(opt=>{const b=document.createElement('button');b.textContent=opt;b.addEventListener('click',()=>checkAnswer(opt,b));answerBox.appendChild(b)});
+}
+function checkAnswer(opt,button){
+ if(state.answer!==null)return;state.answer=opt;
+ const ok=opt===state.correct;profile.answered=(profile.answered||0)+1;if(ok)profile.correct=(profile.correct||0)+1;saveProfile();updateProgress();document.getElementById("feedback").textContent=ok?"Correct! Great work.":"Not quite. The correct answer is: "+state.correct;
+ document.getElementById("feedback").style.color=ok?"#14805e":"#b45309";
+ document.querySelectorAll("#answers button").forEach(b=>{b.disabled=true;if(b.textContent===state.correct){b.style.borderColor="#14805e";b.style.background="#e9f8f1"}});
+}
+gradeEl.addEventListener("change",()=>{try{localStorage.setItem(savedGradeKey,gradeEl.value)}catch(e){}render();if(state.subject)openSubject(state.subject)});
+document.getElementById("themeToggle").addEventListener("click",()=>{document.body.classList.toggle("dark");const on=document.body.classList.contains("dark");document.getElementById("themeToggle").textContent=on?"☀️ Theme":"🌙 Theme";try{localStorage.setItem("learningHubTheme",on?"dark":"light")}catch(e){}});
+try{if(localStorage.getItem("learningHubTheme")==="dark"){document.body.classList.add("dark");document.getElementById("themeToggle").textContent="☀️ Theme"}}catch(e){}
+document.getElementById("jumpQuest").addEventListener("click",()=>document.getElementById("knowledge-quest").scrollIntoView({behavior:"auto",block:"start"}));
+document.getElementById("resumeLearning").addEventListener("click",()=>{const first=subjects.find(s=>(s.name+" "+s.desc+" "+s.topics.join(" ")).toLowerCase().includes(searchEl.value.trim().toLowerCase()));if(first)openSubject(first);else{searchEl.value="";render();openSubject(subjects[0])}});
+searchEl.addEventListener("input",render);
+document.getElementById("closePanel").addEventListener("click",()=>document.getElementById("panel").classList.remove("active"));
+document.getElementById("nextQuestion").addEventListener("click",makeQuestion);
+
+function toggleFullscreen(element){
+ const target=element||document.documentElement;
+ if(document.fullscreenElement){document.exitFullscreen?.().catch(()=>{});document.body.classList.remove('fullscreen-fallback');document.getElementById('fullscreenToggle').textContent='⛶ Full screen';return}
+ if(target.requestFullscreen){target.requestFullscreen().then(()=>{document.getElementById('fullscreenToggle').textContent='⤢ Exit full screen'}).catch(()=>{document.body.classList.toggle('fullscreen-fallback');document.getElementById('fullscreenToggle').textContent=document.body.classList.contains('fullscreen-fallback')?'⤢ Exit full screen':'⛶ Full screen'})}
+ else{document.body.classList.toggle('fullscreen-fallback');document.getElementById('fullscreenToggle').textContent=document.body.classList.contains('fullscreen-fallback')?'⤢ Exit full screen':'⛶ Full screen'}
+}
+document.getElementById('fullscreenToggle').addEventListener('click',()=>toggleFullscreen(document.documentElement));
+document.addEventListener('fullscreenchange',()=>{const active=!!document.fullscreenElement;document.getElementById('fullscreenToggle').textContent=active?'⤢ Exit full screen':'⛶ Full screen'});
+
+render();updateProgress();refreshAccount();
+</script>
+</body>
+</html>
